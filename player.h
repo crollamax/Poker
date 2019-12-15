@@ -17,10 +17,15 @@ class Player{
     std::string name;
     int num_of_cards;
     int money;
+    int money_bet;
     bool is_AI;
+    bool has_folded;
+    bool has_checked;
+    std::string status;
+    std::string blind;
 
 public:
-    Player(std::string input_name="na", bool AI=false);
+    explicit Player(std::string input_name="na");
 
     virtual ~Player();
 
@@ -30,11 +35,27 @@ public:
 
     int getNumOfCards();
 
-    void deal_card(Card new_card);
+    void deal_card(const Card& new_card);
 
     void print_hand();
 
     int get_money();
+
+    void raise(int bet);
+
+    void check();
+
+    void call(int call_amount);
+
+    void fold();
+
+    void add_money(int money_won);
+
+    std::string get_status();
+
+    std::string get_blind();
+
+    bool get_AI_status();
 
 };
 

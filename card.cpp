@@ -8,7 +8,7 @@
 Card::Card(int new_number, char new_suit)
     : number(new_number), suit(new_suit) {}
 
-Card::~Card() {}
+Card::~Card() = default;
 
 int Card::get_number(){
     return number;

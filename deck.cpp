@@ -6,9 +6,9 @@
 #include <random>
 #include "deck.h"
 
-Deck::Deck(){}
+Deck::Deck()= default;
 
-Deck::~Deck(){}
+Deck::~Deck()= default;
 
 std::vector<Card> Deck::get_fresh_deck() {
     std::vector<Card> fresh_deck;

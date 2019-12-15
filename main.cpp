@@ -7,37 +7,36 @@
 #include "hand.h"
 #include "player.h"
 #include "deck.h"
+#include "table.h"
 
 void print_table_cards(std::vector<Card> card_list);
 
 int main() {
 
+    int num_of_players = 6;
+    int turn_number = 0;
+    std::string player_name;
 
-
-    int num_of_players = 2;
     std::vector<Player> player_list(num_of_players);
+    Table table;
 
 
-    // creates players with names and a boolean value for whether they are AI or not
-    for(int i=0; i<num_of_players; i++){
+    std::cout << "Please enter your name: \n";
+    std::cin >> player_name;
+    Player user(player_name);
 
-        std::string player_name;
-        std::string AI_;
-        std::cout << "Insert Player " << i + 1 << "'s name here: \n";
-        std::cin >> player_name;
+    table.add_player(user);
 
-        do {
-            std::cout << "AI? (y/n)";
-            std::cin >> AI_;
-        }
-        while(AI_ != "y" and AI_ != "n");
+    std::vector<std::string> player_names = {"Jef", "Big", "Jez", "Jet", "Liz"};
 
-        bool AI;
-        AI = AI_ == "y";
+    for (int i = 0; i < 5; i++) {
 
-        Player new_player(player_name, AI);
-        player_list[i] = (new_player);
+        Player cpu(player_names[i]);
+        table.add_player(cpu);
     }
+
+//
+    // most/all of the below will need to go into some kind of loop, atm just do one hand
 
 
     // create and shuffle deck
@@ -49,69 +48,52 @@ int main() {
     for(int i = 0; i < 2; i++){
         for(int j = 0; j < num_of_players; j++){
             Card dealt_card = deck.back();
+            table.deal_card(dealt_card, j);
             deck.pop_back();
-            player_list[j].deal_card(dealt_card);
         }
     }
+
+    table.print_table_status("");
 
     // Need to add big/small blinds and some sort of money system
 
     std::string skip;
-    std::cout << "The cards have been dealt, place your bets.\n";
-    std::cin >> skip;
 
-    // burn a card
+    table.get_user_input();
+    table.cpu_bet();
+
+   // burn a card
     deck.pop_back();
 
-    // create list of all dealt cards
-    std::vector<Card> table_cards;
-
     // the flop
-    std::cout << "The flop: \n";
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 3; i++) {
         Card dealt_card = deck.back();
-        table_cards.push_back(dealt_card);
+        table.table_card(dealt_card);
         deck.pop_back();
     }
 
-    print_table_cards(table_cards);
+    table.print_table_status("The flop");
 
-    std::cout << "Place your bets \n";
-    std::cin >> skip;
+    table.get_user_input();
+    table.cpu_bet();
+
 
     // burn a card
     deck.pop_back();
 
     Card turn_card = deck.back();
-    table_cards.push_back(turn_card);
+    table.table_card(turn_card);
     deck.pop_back();
 
-    std::cout << "The turn: \n";
-    print_table_cards(table_cards);
+    table.print_table_status("The turn");
 
-    std::cout << "Place your bets \n";
-    std::cin >> skip;
+    table.get_user_input();
 
     Card river_card = deck.back();
-    table_cards.push_back(river_card);
+    table.table_card(river_card);
     deck.pop_back();
 
-    std::cout << "The river: \n";
-    print_table_cards(table_cards);
+    table.print_table_status("The river");
 
-    std::cout << "Place your bets \n";
-    std::cin >> skip;
-
-
-}
-
-void print_table_cards(std::vector<Card> card_list){
-
-    for(Card card: card_list){
-        card.print_card();
-    }
-
-    std::cout << "\n";
-
-
+    
 }

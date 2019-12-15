@@ -15,9 +15,9 @@ public:
     Deck();
     ~Deck();
 
-    std::vector<Card> get_fresh_deck();
+    static std::vector<Card> get_fresh_deck();
 
-    void shuffle_deck(std::vector<Card> &deck_to_shuffle);
+    static void shuffle_deck(std::vector<Card> &deck_to_shuffle);
 
 };
 

@@ -11,7 +11,7 @@ class Card{
     int number;
     char suit;
 public:
-    Card(int new_number = 0, char new_suit='N');
+    explicit Card(int new_number = 0, char new_suit='N');
 
     virtual ~Card();
 
